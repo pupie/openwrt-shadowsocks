@@ -7,14 +7,14 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=shadowsocks-libev
+PKG_NAME:=shadowsocksR-libev
 PKG_VERSION:=3.0.7
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/shadowsocks/shadowsocks-libev.git
+PKG_SOURCE_URL:=https://github.com/breakwa11/shadowsocks-libev.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)
-PKG_SOURCE_VERSION:=c11b2c08e4aecaa01f7bc4e93d311f9945d84363
+PKG_SOURCE_VERSION:=f713aa981169d35ff9483b295d1209c35117d70c
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.xz
 
 PKG_LICENSE:=GPLv3
@@ -30,34 +30,34 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/shadowsocks-libev/Default
+define Package/shadowsocksR-libev/Default
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=Lightweight Secured Socks5 Proxy
-	URL:=https://github.com/shadowsocks/shadowsocks-libev
-	DEPENDS:=+libev +libudns +libpcre +libpthread +libsodium +libmbedtls
+	URL:=https://github.com/breakwa11/shadowsocks-libev
+	DEPENDS:=+libopenssl +libpthread +libpcre +zlib
 endef
 
-Package/shadowsocks-libev = $(Package/shadowsocks-libev/Default)
-Package/shadowsocks-libev-server = $(Package/shadowsocks-libev/Default)
+Package/shadowsocksR-libev = $(Package/shadowsocksR-libev/Default)
+Package/shadowsocksR-libev-server = $(Package/shadowsocksR-libev/Default)
 
-define Package/shadowsocks-libev/description
+define Package/shadowsocksR-libev/description
 Shadowsocks-libev is a lightweight secured socks5 proxy for embedded devices and low end boxes.
 endef
 
-Package/shadowsocks-libev-server/description = $(Package/shadowsocks-libev/description)
+Package/shadowsocksR-libev-server/description = $(Package/shadowsocksR-libev/description)
 
 CONFIGURE_ARGS += --disable-ssp --disable-documentation --disable-assert
 
-define Package/shadowsocks-libev/install
+define Package/shadowsocksR-libev/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir,tunnel} $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir} $(1)/usr/bin
 endef
 
-define Package/shadowsocks-libev-server/install
+define Package/shadowsocksR-libev-server/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-server $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir} $(1)/usr/bin
 endef
 
-$(eval $(call BuildPackage,shadowsocks-libev))
-$(eval $(call BuildPackage,shadowsocks-libev-server))
+$(eval $(call BuildPackage,shadowsocksR-libev))
+$(eval $(call BuildPackage,shadowsocksR-libev-server))
